@@ -1,0 +1,13 @@
+FROM resin/%%RESIN_MACHINE_NAME%%-systemd
+
+#switch on systemd init system in container
+ENV INITSYSTEM on
+
+RUN apt-get -q update && apt-get install -yq --no-install-recommends \
+	avahi-daemon \
+	&& rm -rf /var/lib/apt/lists/*
+
+COPY . /usr/src/app
+WORKDIR /usr/src/app
+
+CMD ["/bin/bash", "start.sh"]

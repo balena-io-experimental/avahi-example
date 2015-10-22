@@ -1,4 +1,7 @@
 #!/bin/bash
+export PASSWD=${PASSWD:=root}
+echo "root:$PASSWD" | chpasswd
+
 set -e
 
 # Set host-name and enable-dbus

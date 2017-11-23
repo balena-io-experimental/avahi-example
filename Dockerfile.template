@@ -4,10 +4,12 @@ FROM resin/%%RESIN_MACHINE_NAME%%-debian
 ENV INITSYSTEM on
 
 RUN apt-get update && apt-get install -yq --no-install-recommends \
-	avahi-daemon \
+	avahi-utils \
+	libnss-mdns \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
+ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
-CMD ["/bin/bash", "start.sh"]
+CMD [ "/bin/bash", "start.sh" ]
